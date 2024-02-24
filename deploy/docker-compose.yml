@@ -1,0 +1,73 @@
+version: '3.9'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ./deploy/Dockerfile
+      target: prod
+    image: fault_tolerant_online_store:${FAULT_TOLERANT_ONLINE_STORE_VERSION:-latest}
+    restart: always
+    env_file:
+    - .env
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      FAULT_TOLERANT_ONLINE_STORE_HOST: 0.0.0.0
+      FAULT_TOLERANT_ONLINE_STORE_DB_HOST: fault_tolerant_online_store-db
+      FAULT_TOLERANT_ONLINE_STORE_DB_PORT: 5432
+      FAULT_TOLERANT_ONLINE_STORE_DB_USER: fault_tolerant_online_store
+      FAULT_TOLERANT_ONLINE_STORE_DB_PASS: fault_tolerant_online_store
+      FAULT_TOLERANT_ONLINE_STORE_DB_BASE: fault_tolerant_online_store
+      FAULT_TOLERANT_ONLINE_STORE_REDIS_HOST: fault_tolerant_online_store-redis
+
+  db:
+    image: postgres:13.8-bullseye
+    hostname: fault_tolerant_online_store-db
+    environment:
+      POSTGRES_PASSWORD: "fault_tolerant_online_store"
+      POSTGRES_USER: "fault_tolerant_online_store"
+      POSTGRES_DB: "fault_tolerant_online_store"
+    volumes:
+    - fault_tolerant_online_store-db-data:/var/lib/postgresql/data
+    restart: always
+    healthcheck:
+      test: pg_isready -U fault_tolerant_online_store
+      interval: 2s
+      timeout: 3s
+      retries: 40
+
+  migrator:
+    image: fault_tolerant_online_store:${FAULT_TOLERANT_ONLINE_STORE_VERSION:-latest}
+    restart: "no"
+    command: alembic upgrade head
+    environment:
+      FAULT_TOLERANT_ONLINE_STORE_DB_HOST: fault_tolerant_online_store-db
+      FAULT_TOLERANT_ONLINE_STORE_DB_PORT: 5432
+      FAULT_TOLERANT_ONLINE_STORE_DB_USER: fault_tolerant_online_store
+      FAULT_TOLERANT_ONLINE_STORE_DB_PASS: fault_tolerant_online_store
+      FAULT_TOLERANT_ONLINE_STORE_DB_BASE: fault_tolerant_online_store
+    depends_on:
+      db:
+        condition: service_healthy
+
+  redis:
+    image: bitnami/redis:6.2.5
+    hostname: "fault_tolerant_online_store-redis"
+    restart: always
+    environment:
+      ALLOW_EMPTY_PASSWORD: "yes"
+    healthcheck:
+      test: redis-cli ping
+      interval: 1s
+      timeout: 3s
+      retries: 50
+
+
+
+volumes:
+  fault_tolerant_online_store-db-data:
+    name: fault_tolerant_online_store-db-data
