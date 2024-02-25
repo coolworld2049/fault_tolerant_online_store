@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+  cassandra-node1:
+    image: bitnami/cassandra:latest
+    environment:
+      - CASSANDRA_SEEDS=cassandra-node1
+      - CASSANDRA_CLUSTER_NAME=cassandra_cluster
+      - ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - '9042:9042'
+  cassandra-node2:
+    image: bitnami/cassandra:latest
+    environment:
+      - CASSANDRA_SEEDS=cassandra-node1
+      - CASSANDRA_CLUSTER_NAME=cassandra_cluster
+      - ALLOW_EMPTY_PASSWORD=yes
+    depends_on:
+      - cassandra-node1
+  cassandra-node3:
+    image: bitnami/cassandra:latest
+    environment:
+      - CASSANDRA_SEEDS=cassandra-node1
+      - CASSANDRA_CLUSTER_NAME=cassandra_cluster
+      - ALLOW_EMPTY_PASSWORD=yes
+    depends_on:
+      - cassandra-node1

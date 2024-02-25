@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8e6df97e-5d41-4628-9cb6-fdca61264e05" name="Changes" comment="add id param to update_user op">
+      <change afterPath="$PROJECT_DIR$/scripts/alembic_rev.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/__main__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/__main__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/factory.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/factory.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/orm/cassandra/abc.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/orm/cassandra/abc.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/schemas/base.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/base.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitToolBoxStore">
+    <option name="projectConfigVersion" value="5" />
+    <option name="recentBranches">
+      <RecentBranches>
+        <option name="branchesForRepo">
+          <list>
+            <RecentBranchesForRepo>
+              <option name="branches">
+                <list>
+                  <RecentBranch>
+                    <option name="branchName" value="master" />
+                    <option name="lastUsedInstant" value="1708787850" />
+                  </RecentBranch>
+                </list>
+              </option>
+              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$/fault_tolerant_online_store" />
+            </RecentBranchesForRepo>
+            <RecentBranchesForRepo>
+              <option name="branches">
+                <list>
+                  <RecentBranch>
+                    <option name="branchName" value="dev" />
+                    <option name="lastUsedInstant" value="1708788826" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="main" />
+                    <option name="lastUsedInstant" value="1708788816" />
+                  </RecentBranch>
+                </list>
+              </option>
+              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$" />
+            </RecentBranchesForRepo>
+          </list>
+        </option>
+      </RecentBranches>
+    </option>
+  </component>
+  <component name="GithubProjectSettings">
+    <option name="branchProtectionPatterns">
+      <list>
+        <option value="main" />
+      </list>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2concjV1ESunTkDjqawsUWjIFjy" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Docker.deploy.db: Compose Deployment.executor": "Run",
+    "Docker.deploy.migrator: Compose Deployment.executor": "Run",
+    "Docker.deploy.redis: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.yml.db: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.yml.postgresql: Compose Deployment.executor": "Run",
+    "Python tests.pytest for test_fault_tolerant_online_store.test_health.executor": "Run",
+    "Python tests.pytest in tests.executor": "Run",
+    "Python.__main__ (1).executor": "Run",
+    "Python.__main__.executor": "Run",
+    "Python.user.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "dev",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/coolw/PycharmProjects/fault_tolerant_online_store",
+    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\coolw\PycharmProjects\fault_tolerant_online_store" />
+      <recent name="C:\Users\coolw\PycharmProjects\fault_tolerant_online_store\app\repository" />
+      <recent name="C:\Users\coolw\PycharmProjects\fault_tolerant_online_store\app\orm\nosql\cassandra" />
+      <recent name="C:\Users\coolw\PycharmProjects\fault_tolerant_online_store\app\orm\nosql\redis" />
+      <recent name="C:\Users\coolw\PycharmProjects\fault_tolerant_online_store\app\orm\nosql" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\coolw\PycharmProjects\fault_tolerant_online_store\app\orm\sql" />
+      <recent name="C:\Users\coolw\PycharmProjects\fault_tolerant_online_store\app\repository" />
+      <recent name="C:\Users\coolw\PycharmProjects\fault_tolerant_online_store\app\service\uow" />
+      <recent name="C:\Users\coolw\PycharmProjects\fault_tolerant_online_store\app\repository\sql" />
+      <recent name="C:\Users\coolw\PycharmProjects\fault_tolerant_online_store\app\api\v1" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="__main__" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="fault_tolerant_online_store" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/app" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/app/__main__.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
+      <deployment type="docker-compose.yml">
+        <settings />
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.__main__" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-5a2391486177-d3b881c8e49f-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-233.13763.11" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8e6df97e-5d41-4628-9cb6-fdca61264e05" name="Changes" comment="" />
+      <created>1708786879754</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1708786879754</updated>
+    </task>
+    <task id="LOCAL-00001" summary="init">
+      <option name="closed" value="true" />
+      <created>1708788487631</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1708788487631</updated>
+    </task>
+    <task id="LOCAL-00002" summary="impl repository pattern;&#10;impl service pattern;">
+      <option name="closed" value="true" />
+      <created>1708827578220</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1708827578220</updated>
+    </task>
+    <task id="LOCAL-00003" summary="impl UoW pattern [sql]">
+      <option name="closed" value="true" />
+      <created>1708827628964</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1708827628964</updated>
+    </task>
+    <task id="LOCAL-00004" summary="impl repository pattern;&#10;add services;&#10;impl UoW pattern [sql]">
+      <option name="closed" value="true" />
+      <created>1708827667503</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1708827667503</updated>
+    </task>
+    <task id="LOCAL-00005" summary="add alembic">
+      <option name="closed" value="true" />
+      <created>1708829725495</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1708829725495</updated>
+    </task>
+    <task id="LOCAL-00006" summary="add id param to update_user op">
+      <option name="closed" value="true" />
+      <created>1708830297362</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1708830297362</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/fault_tolerant_online_store" />
+      <path value="$PROJECT_DIR$/fastapi-alembic-sqlmodel-async" />
+      <path value="$PROJECT_DIR$/fastapi_layered" />
+    </ignored-roots>
+    <MESSAGE value="init" />
+    <MESSAGE value="impl repository pattern;&#10;impl service pattern;" />
+    <MESSAGE value="impl UoW pattern [sql]" />
+    <MESSAGE value="impl repository pattern;&#10;add services;&#10;impl UoW pattern [sql]" />
+    <MESSAGE value="add alembic" />
+    <MESSAGE value="add id param to update_user op" />
+    <option name="LAST_COMMIT_MESSAGE" value="add id param to update_user op" />
+  </component>
+</project>
