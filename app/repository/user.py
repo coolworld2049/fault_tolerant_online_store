@@ -1,6 +1,5 @@
 from abc import ABC
-
-from sqlmodel import Session
+from typing import Any
 
 from app import schemas
 from app.orm.abc import GenericRepository
@@ -12,5 +11,5 @@ class UserReposityBase(GenericRepository[schemas.User], ABC):
 
 
 class UserRepository(GenericSqlRepository[schemas.User], UserReposityBase):
-    def __init__(self, session: Session) -> None:
+    def __init__(self, session: Any) -> None:
         super().__init__(session, schemas.User)
