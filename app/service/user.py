@@ -20,8 +20,9 @@ class UserService:
         result = self.repository.list()
         return result
 
-    def update_user(self, user: schemas.User) -> schemas.User:
-        result = self.repository.update(user)
+    def update_user(self, id: int, user: schemas.User) -> schemas.User:
+        user_obj = self.repository.get_by_id(id)
+        result = self.repository.update(user_obj)
         return result
 
     def delete_user(self, id: int) -> schemas.User:
