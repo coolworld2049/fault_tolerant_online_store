@@ -5,40 +5,23 @@ services:
     image: bitnami/cassandra:latest
     environment:
       - CASSANDRA_SEEDS=cassandra-node1
-      - CASSANDRA_CLUSTER_NAME=mycluster
-      - CASSANDRA_USERNAME=myuser
-      - CASSANDRA_PASSWORD=mypassword
-      - CASSANDRA_KEYSPACE=mykeyspace
+      - CASSANDRA_CLUSTER_NAME=cassandra_cluster
+      - ALLOW_EMPTY_PASSWORD=yes
     ports:
       - '9042:9042'
-    networks:
-      - cassandra-net
-
   cassandra-node2:
     image: bitnami/cassandra:latest
     environment:
       - CASSANDRA_SEEDS=cassandra-node1
-      - CASSANDRA_CLUSTER_NAME=mycluster
-      - CASSANDRA_USERNAME=myuser
-      - CASSANDRA_PASSWORD=mypassword
-      - CASSANDRA_KEYSPACE=mykeyspace
+      - CASSANDRA_CLUSTER_NAME=cassandra_cluster
+      - ALLOW_EMPTY_PASSWORD=yes
     depends_on:
       - cassandra-node1
-    networks:
-      - cassandra-net
-
   cassandra-node3:
     image: bitnami/cassandra:latest
     environment:
       - CASSANDRA_SEEDS=cassandra-node1
-      - CASSANDRA_CLUSTER_NAME=mycluster
-      - CASSANDRA_USERNAME=myuser
-      - CASSANDRA_PASSWORD=mypassword
-      - CASSANDRA_KEYSPACE=mykeyspace
+      - CASSANDRA_CLUSTER_NAME=cassandra_cluster
+      - ALLOW_EMPTY_PASSWORD=yes
     depends_on:
       - cassandra-node1
-    networks:
-      - cassandra-net
-
-networks:
-  cassandra-net:

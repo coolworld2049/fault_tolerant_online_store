@@ -1,7 +1,8 @@
-import typing
 from abc import ABC
 from typing import Optional, List, TypeVar
-from redis.asyncio import StrictRedis
+
+from redis import Sentinel
+
 from app.orm.abc import GenericRepository
 from app.schemas.base import BaseModel
 
@@ -9,8 +10,13 @@ T = TypeVar("T", bound=BaseModel)
 
 
 class GenericRedisRepository(GenericRepository[T], ABC):
-    def __init__(self, host: str, port: int, db: int, prefix: str) -> None:
-        self.redis_conn = StrictRedis(host=host, port=port, db=db)
+    def __init__(self, sentinel: Sentinel, service_name: str, prefix: str) -> None:
+        self.master = sentinel.master_for(
+            service_name, socket_timeout=0.1, decode_responses=True
+        )
+        self.slave = sentinel.slave_for(
+            service_name, socket_timeout=0.1, decode_responses=True
+        )
         self.prefix = prefix
 
     def _get_key(self, id: int) -> str:
@@ -18,26 +24,25 @@ class GenericRedisRepository(GenericRepository[T], ABC):
 
     def get_by_id(self, id: int) -> Optional[T]:
         key = self._get_key(id)
-        result = self.redis_conn.get(key)
+        result = self.slave.get(key)
         return T.parse_raw(result) if result else None
 
     def list(self, **filters) -> List[T]:
-        # For simplicity, assuming you are storing items as JSON strings in Redis
-        keys = self.redis_conn.keys(f"{self.prefix}:*")
-        results = [T.parse_raw(self.redis_conn.get(key)) for key in keys]
+        keys = self.slave.keys(f"{self.prefix}:*")
+        results = [T.parse_raw(self.slave.get(key)) for key in keys]
         return results
 
     def add(self, record: T) -> T:
         key = self._get_key(record.id)
-        self.redis_conn.set(key, record.json())
+        self.master.set(key, record.json())
         return record
 
     def update(self, record: T) -> T:
         key = self._get_key(record.id)
-        if self.redis_conn.exists(key):
-            self.redis_conn.set(key, record.json())
+        if self.slave.exists(key):
+            self.master.set(key, record.json())
         return record
 
     def delete(self, id: int) -> None:
         key = self._get_key(id)
-        self.redis_conn.delete(key)
+        self.master.delete(key)

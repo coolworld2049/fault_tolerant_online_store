@@ -5,7 +5,7 @@ from starlette import status
 from starlette.requests import Request
 
 from app.repository.user import UserRepository
-from app.service.unit_of_work import UnitOfWork
+from app.uow.uow import UnitOfWork
 from app.service.user import UserService
 
 
