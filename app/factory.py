@@ -4,10 +4,10 @@ from typing import Callable, Coroutine, Iterable
 
 from fastapi import APIRouter, FastAPI
 
-__all__ = ("create",)
+__all__ = ("create_fastapi_app",)
 
 
-def create(
+def create_fastapi_app(
     *_,
     _routers: Iterable[APIRouter],
     startup_tasks: Iterable[Callable[[], Coroutine]] | None = None,
