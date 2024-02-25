@@ -7,13 +7,15 @@ from app.repository.user import UserRepository, UserReposityBase
 
 
 class IUnitOfWork(ABC):
-    users: UserReposityBase
+    user_repository: UserReposityBase
 
     def __enter__(self):
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
-        self.rollback()
+        if exc_value:
+            self.rollback()
+        self.commit()
 
     @abstractmethod
     def commit(self):
@@ -33,7 +35,7 @@ class UnitOfWork(IUnitOfWork):
 
     def __enter__(self):
         self._session: Session = self._session_factory()
-        self.users = UserRepository(self._session)
+        self.user_repository = UserRepository(self._session)
         return super().__enter__()
 
     def commit(self):

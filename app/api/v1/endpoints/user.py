@@ -1,4 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
+from starlette import status
+from starlette.responses import JSONResponse
 
 from app import schemas
 from app.api.deps import get_user_service
@@ -52,7 +54,8 @@ def delete_user(
     id: int,
     user_service: UserService = Depends(get_user_service),
 ):
-    deleted_user = user_service.delete_user(id)
-    if deleted_user is None:
-        raise HTTPException(status_code=404, detail="User not found")
-    return deleted_user
+    user_service.delete_user(id)
+    user = user_service.get_user(id)
+    if user is None:
+        return JSONResponse(status_code=status.HTTP_200_OK, content="User already deleted")
+    return user
