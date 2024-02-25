@@ -1,0 +1,36 @@
+version: '3.9'
+
+services:
+  redis-node1:
+    image: bitnami/redis-cluster:latest
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - REDIS_CLUSTER_CREATOR=yes
+      - REDIS_CLUSTER_REPLICAS=1
+    ports:
+      - '6379:6379'
+    networks:
+      - redis-net
+
+  redis-node2:
+    image: bitnami/redis-cluster:latest
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - REDIS_CLUSTER_REPLICAS=1
+    depends_on:
+      - redis-node1
+    networks:
+      - redis-net
+
+  redis-node3:
+    image: bitnami/redis-cluster:latest
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - REDIS_CLUSTER_REPLICAS=1
+    depends_on:
+      - redis-node1
+    networks:
+      - redis-net
+
+networks:
+  redis-net:
