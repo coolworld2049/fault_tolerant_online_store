@@ -4,7 +4,7 @@ services:
   cassandra-node1:
     image: bitnami/cassandra:latest
     environment:
-      - CASSANDRA_SEEDS=cassandra-node1
+      - CASSANDRA_SEEDS=cassandra-node1,cassandra-node2,cassandra-node3
       - CASSANDRA_CLUSTER_NAME=cassandra_cluster
       - ALLOW_EMPTY_PASSWORD=yes
     ports:
@@ -12,7 +12,7 @@ services:
   cassandra-node2:
     image: bitnami/cassandra:latest
     environment:
-      - CASSANDRA_SEEDS=cassandra-node1
+      - CASSANDRA_SEEDS=cassandra-node1,cassandra-node2,cassandra-node3
       - CASSANDRA_CLUSTER_NAME=cassandra_cluster
       - ALLOW_EMPTY_PASSWORD=yes
     depends_on:
@@ -20,7 +20,7 @@ services:
   cassandra-node3:
     image: bitnami/cassandra:latest
     environment:
-      - CASSANDRA_SEEDS=cassandra-node1
+      - CASSANDRA_SEEDS=cassandra-node1,cassandra-node2,cassandra-node3
       - CASSANDRA_CLUSTER_NAME=cassandra_cluster
       - ALLOW_EMPTY_PASSWORD=yes
     depends_on:
