@@ -3,10 +3,10 @@ from typing import Optional, List, TypeVar
 
 from redis import Sentinel
 
-from app.orm.abc import GenericRepository
-from app.schemas.base import BaseModel
+from app.orm.abstract import GenericRepository
+from app.models.base import BaseSQLModel
 
-T = TypeVar("T", bound=BaseModel)
+T = TypeVar("T", bound=BaseSQLModel)
 
 
 class GenericRedisRepository(GenericRepository[T], ABC):

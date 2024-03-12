@@ -3,10 +3,16 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     POSTGRESQL_URL: str = (
-        "postgresql+psycopg2://postgres:adminpassword@localhost:5432/customdatabase"
+        "postgresql+psycopg2://postgres:postgres@localhost:5432/postgres"
     )
 
-    CASSANDRA_CONTACT_POINTS: list[str] | list[tuple[str, int]] = [("localhost", 9042)]
+    POSTGRESQL_NODES: list[int] | list[tuple[str, int]] = [5432, 5433]
+
+    CASSANDRA_CONTACT_POINTS: list[int] | list[tuple[str, int]] = [
+        ("localhost", 9042),
+        ("localhost", 9043),
+        ("localhost", 9044),
+    ]
     CASSANDRA_KEYSPACE: str = "cassandra_keyspace"
 
     REDIS_SENTINEL_NODES: list[tuple[str, int]] = [("localhost", 26379)]

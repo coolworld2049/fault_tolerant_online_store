@@ -2,13 +2,12 @@ import typing
 from abc import ABC, abstractmethod
 from typing import Generic, TypeVar, Optional, List
 
-from app.schemas.base import BaseModel
+from app import models
 
-T = TypeVar("T", bound=BaseModel)
+T = TypeVar("T", bound=models.BaseSQLModel)
 
 
 class GenericRepository(Generic[T], ABC):
-    """Generic base repository."""
 
     @abstractmethod
     def get_by_id(self, id: typing.Any) -> Optional[T]:

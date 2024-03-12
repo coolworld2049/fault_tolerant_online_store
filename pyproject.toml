@@ -11,17 +11,19 @@ sqlmodel = "^0.0.16"
 fastapi = "^0.110.0"
 pydantic-settings = "^2.2.1"
 cassandra-driver = "^3.29.0"
-redis = "^5.0.2"
-uvicorn = {extras = ["standart"], version = "^0.27.1"}
+redis = "^5.0.3"
+uvicorn = "^0.28.0"
 loguru = "^0.7.2"
 psycopg2 = "^2.9.9"
 psycopg2-binary = "^2.9.9"
 alembic = "^1.13.1"
 poetry-plugin-export = "^1.6.0"
+tenacity = "^8.2.3"
 
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.6.2"
+black = "^24.2.0"
 
 [build-system]
 requires = ["poetry-core"]

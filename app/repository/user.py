@@ -1,15 +1,15 @@
 from abc import ABC
 from typing import Any
 
-from app import schemas
-from app.orm.abc import GenericRepository
-from app.orm.sql.abc import GenericSqlRepository
+from app import models
+from app.orm.abstract import GenericRepository
+from app.orm.sql.base import GenericSqlRepository
 
 
-class UserReposityBase(GenericRepository[schemas.User], ABC):
+class UserReposityBase(GenericRepository[models.User], ABC):
     pass
 
 
-class UserRepository(GenericSqlRepository[schemas.User], UserReposityBase):
+class UserRepository(GenericSqlRepository[models.User], UserReposityBase):
     def __init__(self, session: Any) -> None:
-        super().__init__(session, schemas.User)
+        super().__init__(session, models.User)

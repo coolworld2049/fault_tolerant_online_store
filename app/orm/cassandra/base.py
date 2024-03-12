@@ -3,10 +3,10 @@ from typing import Optional, List, TypeVar
 
 from cassandra.cluster import Session
 
-from app.orm.abc import GenericRepository
-from app.schemas.base import BaseModel
+from app.orm.abstract import GenericRepository
+from app.models.base import BaseSQLModel
 
-T = TypeVar("T", bound=BaseModel)
+T = TypeVar("T", bound=BaseSQLModel)
 
 
 class GenericCassandraRepository(GenericRepository[T], ABC):

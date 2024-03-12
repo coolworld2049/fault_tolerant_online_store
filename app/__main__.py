@@ -1,7 +1,7 @@
 import uvicorn
 
 from app import factory
-from app.api.v1.api import api_router
+from app.api.api import api_router
 from app.lifespan import lifespan
 
 app = factory.create_fastapi_app(

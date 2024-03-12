@@ -5,7 +5,7 @@ from sqlalchemy import Row, RowMapping
 from sqlmodel import Session
 from sqlmodel.sql.expression import SelectOfScalar, select, and_
 
-from app.orm.abc import GenericRepository, T
+from app.orm.abstract import GenericRepository, T
 
 
 class GenericSqlRepository(GenericRepository[T], ABC):
