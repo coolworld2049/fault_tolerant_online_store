@@ -11,10 +11,10 @@ class Settings(BaseSettings):
         ("localhost", 9043),
         ("localhost", 9044),
     ]
-    CASSANDRA_KEYSPACE: str = "cassandra_keyspace"
 
     REDIS_SENTINEL_NODES: list[tuple[str, int]] = [("localhost", 26379)]
     REDIS_MASTER_NAME: str = "redismaster"
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",
