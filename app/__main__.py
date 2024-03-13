@@ -1,10 +1,10 @@
 import uvicorn
 
-from app import factory
+from app import application
 from app.api.api import api_router
 from app.lifespan import lifespan
 
-app = factory.create_fastapi_app(
+app = application.create_fastapi_app(
     _routers=[api_router],
     lifespan=lifespan,
     openapi_url="/api/openapi.json",

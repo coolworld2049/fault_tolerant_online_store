@@ -29,12 +29,12 @@ class IUnitOfWork(ABC):
 class UnitOfWork(IUnitOfWork):
     def __init__(
         self,
-        session_factory: Callable[[], Session],
+        sql_session_factory: Callable[[], Session],
     ) -> None:
-        self._session_factory = session_factory
+        self._sql_session_factory = sql_session_factory
 
     def __enter__(self):
-        self._session: Session = self._session_factory()
+        self._session: Session = self._sql_session_factory()
         self.user_repository = UserRepository(self._session)
         return super().__enter__()
 

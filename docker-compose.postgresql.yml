@@ -45,6 +45,8 @@ services:
       - PGPOOL_ADMIN_USERNAME=admin
       - PGPOOL_ADMIN_PASSWORD=postgres
       - PGPOOL_ENABLE_LOAD_BALANCING=yes
+    ports:
+      - "5432:5432"
     healthcheck:
       test: [ "CMD", "/opt/bitnami/scripts/pgpool/healthcheck.sh" ]
       interval: 10s
@@ -62,6 +64,8 @@ services:
       - PGPOOL_ADMIN_USERNAME=admin
       - PGPOOL_ADMIN_PASSWORD=postgres
       - PGPOOL_ENABLE_LOAD_BALANCING=yes
+    ports:
+      - "5433:5432"
     healthcheck:
       test: [ "CMD", "/opt/bitnami/scripts/pgpool/healthcheck.sh" ]
       interval: 10s

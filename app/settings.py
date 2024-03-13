@@ -2,15 +2,10 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    POSTGRESQL_URL: str = (
-        "postgresql+psycopg2://postgres:postgres@localhost:5434/postgres"
-    )
-
-    PGPOOL_NODES: list[int] | list[tuple[str, int]] = [
-        ("localhost", 5432),
-        ("localhost", 5433),
+    PGPOOL_URLS: list[str] = [
+        "postgresql+psycopg2://postgres:postgres@localhost:5432/postgres",
+        "postgresql+psycopg2://postgres:postgres@localhost:5433/postgres",
     ]
-
     CASSANDRA_NODES: list[int] | list[tuple[str, int]] = [
         ("localhost", 9042),
         ("localhost", 9043),

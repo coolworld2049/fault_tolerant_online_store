@@ -48,7 +48,9 @@ def update_user(
             id=id, user=models.User(**user.model_dump())
         )
     except Exception as e:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=",".join(e.args))
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=",".join(e.args)
+        )
     return updated_user
 
 

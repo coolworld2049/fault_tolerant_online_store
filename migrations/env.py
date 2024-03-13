@@ -1,7 +1,7 @@
 from logging.config import fileConfig
 
 from alembic import context
-from sqlalchemy import pool
+from sqlalchemy import pool, create_engine
 
 from app.models import *  # noqa
 from app.orm.sql.session import create_sqlmodel_engine
@@ -41,7 +41,7 @@ def run_migrations_offline() -> None:
     script output.
 
     """
-    url = settings.POSTGRESQL_URL
+    url = settings.PGPOOL_URLS[0]
     context.configure(
         url=url,
         target_metadata=target_metadata,
@@ -60,8 +60,8 @@ def run_migrations_online() -> None:
     and associate a connection with the context.
 
     """
-    connectable = create_sqlmodel_engine(
-        url=settings.POSTGRESQL_URL,
+    connectable = create_engine(
+        url=settings.PGPOOL_URLS[0],
         poolclass=pool.NullPool,
     )
 

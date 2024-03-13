@@ -2,12 +2,11 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from loguru import logger
-from sqlmodel import SQLModel
 from tenacity import retry, stop_after_attempt, wait_fixed
 
 from app.orm.cassandra.session import create_cassandra_session
 from app.orm.redis.session import create_redis_sentinel
-from app.orm.sql.session import create_sqlmodel_engine, create_sqlmodel_session_maker
+from app.orm.sql.session import sql_session_factory
 from app.settings import settings
 
 
@@ -16,11 +15,8 @@ from app.settings import settings
 async def lifespan(app: FastAPI):
     logger.info("startup")
     try:
-        engine = create_sqlmodel_engine(url=settings.POSTGRESQL_URL, echo=False)
-        SQLModel.metadata.create_all(engine)
 
-        session_maker = create_sqlmodel_session_maker(engine)
-        app.state.sql_session_factory = session_maker
+        app.state.sql_session_factory = sql_session_factory
 
         sentinel = create_redis_sentinel(
             sentinel_nodes=settings.REDIS_SENTINEL_NODES,

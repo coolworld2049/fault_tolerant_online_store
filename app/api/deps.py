@@ -13,7 +13,7 @@ from app.service.user import UserService
 def get_user_repository(requset: Request):
     sql_session_factory = requset.app.state.sql_session_factory
     try:
-        with UnitOfWork(session_factory=sql_session_factory) as uow:
+        with UnitOfWork(sql_session_factory=sql_session_factory) as uow:
             yield uow.user_repository
     except SQLAlchemyError as e:
         logger.error(e)
