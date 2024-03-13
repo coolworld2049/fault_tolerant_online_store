@@ -6,7 +6,12 @@ class Settings(BaseSettings):
         "postgresql+psycopg2://postgres:postgres@localhost:5434/postgres"
     )
 
-    CASSANDRA_CONTACT_POINTS: list[int] | list[tuple[str, int]] = [
+    PGPOOL_NODES: list[int] | list[tuple[str, int]] = [
+        ("localhost", 5432),
+        ("localhost", 5433),
+    ]
+
+    CASSANDRA_NODES: list[int] | list[tuple[str, int]] = [
         ("localhost", 9042),
         ("localhost", 9043),
         ("localhost", 9044),

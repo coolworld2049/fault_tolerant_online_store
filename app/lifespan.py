@@ -29,7 +29,7 @@ async def lifespan(app: FastAPI):
         app.state.redis_sentinel = sentinel
 
         cassandra_session = create_cassandra_session(
-            contact_points=settings.CASSANDRA_CONTACT_POINTS,
+            contact_points=settings.CASSANDRA_NODES,
         )
         app.state.cassandra_session = cassandra_session
     except Exception as e:
