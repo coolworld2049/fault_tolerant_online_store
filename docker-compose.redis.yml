@@ -1,29 +1,102 @@
-version: '3'
-
+version: '2'
+networks:
+  redis-network:
+    driver: bridge
 services:
-  redis-sentinel:
-    image: bitnami/redis-sentinel:latest
-    ports:
-      - "26379:26379"
-    environment:
-      - REDIS_MASTER_HOST=redis-master
-      - ALLOW_EMPTY_PASSWORD=yes
   redis-master:
     image: bitnami/redis:latest
     ports:
       - "6379:6379"
     environment:
+      - REDIS_PORT_NUMBER=6379
       - REDIS_REPLICATION_MODE=master
-      - ALLOW_EMPTY_PASSWORD=yes
+      - REDIS_PASSWORD=redispassword
+    networks:
+      - redis-network
   redis-slave-1:
     image: bitnami/redis:latest
+    ports:
+      - "6380:6380"
     environment:
+      - REDIS_PORT_NUMBER=6380
       - REDIS_REPLICATION_MODE=slave
       - REDIS_MASTER_HOST=redis-master
-      - ALLOW_EMPTY_PASSWORD=yes
+      - REDIS_MASTER_PORT_NUMBER=6379
+      - REDIS_MASTER_PASSWORD=redispassword
+      - REDIS_PASSWORD=redispassword
+    networks:
+      - redis-network
   redis-slave-2:
     image: bitnami/redis:latest
+    ports:
+      - "6381:6381"
     environment:
+      - REDIS_PORT_NUMBER=6381
       - REDIS_REPLICATION_MODE=slave
       - REDIS_MASTER_HOST=redis-master
-      - ALLOW_EMPTY_PASSWORD=yes
+      - REDIS_MASTER_PORT_NUMBER=6379
+      - REDIS_MASTER_PASSWORD=redispassword
+      - REDIS_PASSWORD=redispassword
+    depends_on:
+      - redis-master
+    networks:
+      - redis-network
+  redis-slave-3:
+    image: bitnami/redis:latest
+    ports:
+      - "6382:6382"
+    environment:
+      - REDIS_PORT_NUMBER=6382
+      - REDIS_REPLICATION_MODE=slave
+      - REDIS_MASTER_HOST=redis-master
+      - REDIS_MASTER_PORT_NUMBER=6379
+      - REDIS_MASTER_PASSWORD=redispassword
+      - REDIS_PASSWORD=redispassword
+    networks:
+      - redis-network
+
+  redis-sentinel-1:
+    image: bitnami/redis-sentinel:latest
+    ports:
+      - "26379:26379"
+    environment:
+      - REDIS_MASTER_SET=redis
+      - REDIS_MASTER_HOST=redis-master
+      - REDIS_MASTER_PORT_NUMBER=6379
+      - REDIS_MASTER_PASSWORD=redispassword
+      - REDIS_SENTINEL_PORT_NUMBER=26379
+      - REDIS_SENTINEL_ANNOUNCE_HOSTNAMES=yes
+      - REDIS_SENTINEL_DOWN_AFTER_MILLISECONDS=5000
+      - REDIS_SENTINEL_FAILOVER_TIMEOUT=10000
+    networks:
+      - redis-network
+  redis-sentinel-2:
+    image: bitnami/redis-sentinel:latest
+    ports:
+      - "26380:26380"
+    environment:
+      - REDIS_MASTER_SET=redis
+      - REDIS_MASTER_HOST=redis-master
+      - REDIS_MASTER_PORT_NUMBER=6379
+      - REDIS_MASTER_PASSWORD=redispassword
+      - REDIS_SENTINEL_PORT_NUMBER=26380
+      - REDIS_SENTINEL_ANNOUNCE_HOSTNAMES=yes
+      - REDIS_SENTINEL_DOWN_AFTER_MILLISECONDS=5000
+      - REDIS_SENTINEL_FAILOVER_TIMEOUT=10000
+    networks:
+      - redis-network
+  redis-sentinel-3:
+    image: bitnami/redis-sentinel:latest
+    ports:
+      - "26381:26381"
+    environment:
+      - REDIS_MASTER_SET=redis
+      - REDIS_MASTER_HOST=redis-master
+      - REDIS_MASTER_PORT_NUMBER=6379
+      - REDIS_MASTER_PASSWORD=redispassword
+      - REDIS_SENTINEL_PORT_NUMBER=26381
+      - REDIS_SENTINEL_ANNOUNCE_HOSTNAMES=yes
+      - REDIS_SENTINEL_DOWN_AFTER_MILLISECONDS=5000
+      - REDIS_SENTINEL_FAILOVER_TIMEOUT=10000
+    networks:
+      - redis-network

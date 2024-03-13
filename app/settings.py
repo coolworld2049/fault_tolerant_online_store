@@ -13,7 +13,7 @@ class Settings(BaseSettings):
     ]
 
     REDIS_SENTINEL_NODES: list[tuple[str, int]] = [("localhost", 26379)]
-    REDIS_MASTER_NAME: str = "redismaster"
+    REDIS_MASTER_NAME: str = "redis-master"
 
     model_config = SettingsConfigDict(
         env_file=".env",
