@@ -31,15 +31,6 @@ class User(UserBase, table=True):
     __tablename__ = "users"
 
 
-class UserOut(UserBase):
-    id: int
-
-
-class UsersOut(SQLModel):
-    data: list[UserOut]
-    count: int | None = None
-
-
 # ------------- Product -------------
 
 
@@ -60,15 +51,6 @@ class Product(ProductBase, table=True):
     __tablename__ = "products"
 
 
-class ProductOut(ProductBase):
-    id: int
-
-
-class ProductsOut(SQLModel):
-    data: list[ProductOut]
-    count: int | None = None
-
-
 # ------------- Cart -------------
 class CartBase(BaseSQLModel):
     user_id: int = Field(foreign_key="users.id")
@@ -84,15 +66,6 @@ class CartUpdate(CartBase):
 
 class Cart(CartBase, table=True):
     __tablename__ = "carts"
-
-
-class CartOut(CartBase):
-    id: int
-
-
-class CartsOut(SQLModel):
-    data: list[CartOut]
-    count: int | None = None
 
 
 # ------------- CartItem -------------
@@ -112,15 +85,6 @@ class CartItemUpdate(CartItemBase):
 
 class CartItem(CartItemBase, table=True):
     __tablename__ = "cart_items"
-
-
-class CartItemOut(CartItemBase):
-    id: int
-
-
-class CartItemsOut(SQLModel):
-    data: list[CartItemOut]
-    count: int | None = None
 
 
 # ------------- Order -------------
@@ -147,16 +111,7 @@ class Order(OrderBase, table=True):
     __tablename__ = "orders"
 
 
-class OrderOut(OrderBase):
-    id: int
-
-
-class OrdersOut(SQLModel):
-    data: list[OrderOut]
-    count: int | None = None
-
-
-# ------------- Order -------------
+# ------------- OrderItem -------------
 class OrderItemBase(BaseSQLModel):
     order_id: int = Field(foreign_key="orders.id")
     product_id: int = Field(foreign_key="products.id")
@@ -173,12 +128,3 @@ class OrderItemUpdate(OrderItemBase):
 
 class OrderItem(OrderItemBase, table=True):
     __tablename__ = "order_items"
-
-
-class OrderItemOut(OrderItemBase):
-    id: int
-
-
-class OrderItemsOut(SQLModel):
-    data: list[OrderItemOut]
-    count: int | None = None
