@@ -1,5 +1,6 @@
 import time
 from collections import deque
+from threading import get_ident
 from typing import Any
 
 from loguru import logger
@@ -36,8 +37,13 @@ class RoutingSession(Session):
 
 sql_session_factory = scoped_session(
     sessionmaker(
-        class_=RoutingSession, autocommit=False, autoflush=False, expire_on_commit=False
-    )
+        class_=RoutingSession,
+        autocommit=False,
+        autoflush=False,
+        expire_on_commit=False,
+        future=True,
+    ),
+    scopefunc=get_ident,
 )
 
 

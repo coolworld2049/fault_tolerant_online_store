@@ -1,31 +1,22 @@
-import asyncio
-from functools import partial
-from typing import Callable, Coroutine, Iterable
+import logging
+import sys
 
-from fastapi import APIRouter, FastAPI
+from fastapi import FastAPI
+from loguru import logger
 
-__all__ = ("create_fastapi_app",)
+from app.api.api import api_router
+from app.lifespan import lifespan
+from app.settings import settings
 
 
-def create_fastapi_app(
-    *_,
-    _routers: Iterable[APIRouter],
-    startup_tasks: Iterable[Callable[[], Coroutine]] | None = None,
-    shutdown_tasks: Iterable[Callable[[], Coroutine]] | None = None,
-    **kwargs,
-) -> FastAPI:
-    app = FastAPI(**kwargs)
+def create_fastapi_app() -> FastAPI:
+    logger.add(sys.stdout, level=settings.LOG_LEVEL)
+    app = FastAPI(
+        lifespan=lifespan,
+        openapi_url="/api/openapi.json",
+        docs_url="/api/docs",
+    )
 
-    for router in _routers:
-        app.include_router(router)
-
-    if startup_tasks:
-        for task in startup_tasks:
-            coro = partial(asyncio.create_task, task())
-            app.on_event("startup")(coro)
-
-    if shutdown_tasks:
-        for task in shutdown_tasks:
-            app.on_event("shutdown")(task)
+    app.include_router(api_router)
 
     return app

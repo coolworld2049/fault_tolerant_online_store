@@ -1,15 +1,18 @@
+import logging
+import sys
+
 import uvicorn
+from loguru import logger
 
-from app import application
-from app.api.api import api_router
-from app.lifespan import lifespan
-
-app = application.create_fastapi_app(
-    _routers=[api_router],
-    lifespan=lifespan,
-    openapi_url="/api/openapi.json",
-    docs_url="/api/docs",
-)
+from app.settings import settings
 
 if __name__ == "__main__":
-    uvicorn.run(app)
+    logger.remove()
+    uvicorn.run(
+        "app.application:create_fastapi_app",
+        host=settings.HOST,
+        port=settings.PORT,
+        workers=settings.WORKER_NUMBER,
+        reload=settings.RELOAD,
+        factory=True,
+    )

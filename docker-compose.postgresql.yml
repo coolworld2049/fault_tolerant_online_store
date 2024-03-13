@@ -45,6 +45,8 @@ services:
       - PGPOOL_ADMIN_USERNAME=admin
       - PGPOOL_ADMIN_PASSWORD=postgres
       - PGPOOL_ENABLE_LOAD_BALANCING=yes
+      - PGPOOL_MAX_POOL=20
+      - PGPOOL_NUM_INIT_CHILDREN=1000
     ports:
       - "5432:5432"
     healthcheck:
@@ -64,6 +66,8 @@ services:
       - PGPOOL_ADMIN_USERNAME=admin
       - PGPOOL_ADMIN_PASSWORD=postgres
       - PGPOOL_ENABLE_LOAD_BALANCING=yes
+      - PGPOOL_MAX_POOL=20
+      - PGPOOL_NUM_INIT_CHILDREN=1000
     ports:
       - "5433:5432"
     healthcheck:

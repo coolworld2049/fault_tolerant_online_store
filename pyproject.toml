@@ -14,11 +14,11 @@ cassandra-driver = "^3.29.0"
 redis = "^5.0.3"
 uvicorn = "^0.28.0"
 loguru = "^0.7.2"
-psycopg2 = "^2.9.9"
-psycopg2-binary = "^2.9.9"
 alembic = "^1.13.1"
 poetry-plugin-export = "^1.6.0"
 tenacity = "^8.2.3"
+locust = "^2.24.0"
+psycopg = {extras = ["binary", "pool"], version = "^3.1.18"}
 
 
 [tool.poetry.group.dev.dependencies]
