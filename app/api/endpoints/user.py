@@ -30,7 +30,7 @@ def read_user(
 
 
 @router.get("/", response_model=list[models.User])
-def read_users(
+def read_user_list(
     users_service: UserService = Depends(get_user_service),
 ):
     users = users_service.get_list_users()
