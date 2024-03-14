@@ -5,7 +5,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     HOST: str = "localhost"
     PORT: int = 8000
-    LOG_LEVEL: str = "INFO"
+    LOG_LEVEL: str = "DEBUG"
     WORKER_NUMBER: int = 1
     RELOAD: bool = False
 

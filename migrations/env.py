@@ -3,8 +3,7 @@ from logging.config import fileConfig
 from alembic import context
 from sqlalchemy import pool, create_engine
 
-from app.models import *  # noqa
-from app.orm.sql.session import create_sqlmodel_engine
+from app.models import *
 from app.settings import settings
 
 # this is the Alembic Config object, which provides

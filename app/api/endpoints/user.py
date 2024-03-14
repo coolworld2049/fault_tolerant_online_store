@@ -33,7 +33,7 @@ def read_user(
 def read_user_list(
     users_service: UserService = Depends(get_user_service),
 ):
-    users = users_service.get_list_users()
+    users = users_service.get_users_list()
     return users
 
 
@@ -44,9 +44,7 @@ def update_user(
     user_service: UserService = Depends(get_user_service),
 ):
     try:
-        updated_user = user_service.update_user(
-            id=id, user=models.User(**user.model_dump())
-        )
+        updated_user = user_service.update_user(id=id, user=user)
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail=",".join(e.args)

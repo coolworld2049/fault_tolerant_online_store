@@ -8,7 +8,7 @@ class UserService:
     def __init__(self, repository: UserRepository) -> None:
         self.repository = repository
 
-    def create_user(self, user: models.User) -> models.User:
+    def create_user(self, user: models.UserCreate) -> models.User:
         result = self.repository.add(user)
         return result
 
@@ -16,12 +16,14 @@ class UserService:
         result = self.repository.get_by_id(id)
         return result
 
-    def get_list_users(self) -> List[models.User]:
+    def get_users_list(self) -> List[models.User]:
         result = self.repository.list()
         return result
 
-    def update_user(self, id: int, user: models.User) -> models.User:
-        result = self.repository.update(user)
+    def update_user(self, id: int, user: models.UserUpdate) -> models.User:
+        user_in = models.User(**user.model_dump(exclude_unset=True))
+        user_in.id = id
+        result = self.repository.update(user_in)
         return result
 
     def delete_user(self, id: int) -> models.User:

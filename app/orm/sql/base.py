@@ -1,7 +1,7 @@
 from abc import ABC
 from typing import Type, Optional, Any, Sequence
 
-from sqlalchemy import Row, RowMapping
+from sqlalchemy import Row, RowMapping, update
 from sqlmodel import Session
 from sqlmodel.sql.expression import SelectOfScalar, select, and_
 
@@ -46,13 +46,15 @@ class GenericSqlRepository(GenericRepository[T], ABC):
         return record
 
     def update(self, record: T) -> T:
-        obj = self.get_by_id(record.id)
-        if not obj:
-            raise Exception("update entry not found")
-        record.sqlmodel_update(record)
-        self._session.add(record)
+        stmt = (
+            update(self._model_cls)
+            .values(**record.model_dump(exclude={"id"}))
+            .where(self._model_cls.id == record.id)
+            .returning(self._model_cls)
+        )
+        result = self._session.exec(stmt)
+        record = result.scalar_one()
         self._session.flush()
-        self._session.refresh(record)
         return record
 
     def delete(self, id: int) -> None:

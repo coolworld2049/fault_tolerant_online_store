@@ -10,6 +10,7 @@ from app.settings import settings
 
 
 def create_fastapi_app() -> FastAPI:
+    logger.remove()
     logger.add(sys.stdout, level=settings.LOG_LEVEL)
     app = FastAPI(
         lifespan=lifespan,

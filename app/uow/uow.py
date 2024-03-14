@@ -42,9 +42,9 @@ class UnitOfWork(IUnitOfWork):
     def __exit__(self, exc_type, exc_value, traceback):
         if exc_value:
             self.rollback()
-        self.commit()
-        if isinstance(self._session, ScopedSession):
-            self._session.close()
+        else:
+            self.commit()
+        self._session.close()
 
     def commit(self):
         self._session.commit()

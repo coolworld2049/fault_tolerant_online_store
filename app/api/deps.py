@@ -2,20 +2,19 @@ from fastapi import HTTPException
 from fastapi.params import Depends
 from loguru import logger
 from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy.orm.scoping import ScopedSession
+from sqlalchemy.orm import Session
 from starlette import status
 from starlette.requests import Request
 
-from app.repository.user import UserRepository
-from app.uow.uow import UnitOfWork
 from app.service.user import UserService
+from app.uow.uow import UnitOfWork
 
 
-def get_user_repository(requset: Request):
-    sql_session_factory: ScopedSession = requset.app.state.sql_session_factory
+def get_uow(requset: Request):
+    sql_session_factory: Session = requset.app.state.sql_session_factory
     try:
         with UnitOfWork(sql_session_factory=sql_session_factory) as uow:
-            yield uow.user_repository
+            yield uow
     except SQLAlchemyError as e:
         logger.error(e)
         raise HTTPException(
@@ -24,6 +23,6 @@ def get_user_repository(requset: Request):
 
 
 def get_user_service(
-    user_repository: UserRepository = Depends(get_user_repository),
+    uow: UnitOfWork = Depends(get_uow),
 ) -> UserService:
-    yield UserService(user_repository)
+    yield UserService(uow.user_repository)

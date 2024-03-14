@@ -18,16 +18,16 @@ async def lifespan(app: FastAPI):
 
         app.state.sql_session_factory = sql_session_factory
 
-        sentinel = create_redis_sentinel(
-            sentinel_nodes=settings.REDIS_SENTINEL_NODES,
-            master_name=settings.REDIS_MASTER_NAME,
-        )
-        app.state.redis_sentinel = sentinel
-
-        cassandra_session = create_cassandra_session(
-            contact_points=settings.CASSANDRA_NODES,
-        )
-        app.state.cassandra_session = cassandra_session
+        # sentinel = create_redis_sentinel(
+        #     sentinel_nodes=settings.REDIS_SENTINEL_NODES,
+        #     master_name=settings.REDIS_MASTER_NAME,
+        # )
+        # app.state.redis_sentinel = sentinel
+        #
+        # cassandra_session = create_cassandra_session(
+        #     contact_points=settings.CASSANDRA_NODES,
+        # )
+        # app.state.cassandra_session = cassandra_session
     except Exception as e:
         logger.error(e)
 

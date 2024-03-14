@@ -1,11 +1,10 @@
 import time
 from collections import deque
-from threading import get_ident
 from typing import Any
 
 from loguru import logger
-from sqlalchemy import event, Connection
-from sqlalchemy.orm import sessionmaker, scoped_session
+from sqlalchemy import event, Connection, text
+from sqlalchemy.orm import sessionmaker
 from sqlmodel import create_engine, Session, SQLModel
 
 from app.settings import settings
@@ -24,6 +23,26 @@ class RoutingSession(Session):
     ):
         engine = engines[0]
         engines.rotate(-1)
+
+        def test_conn(_engine):
+            try:
+                s = _engine.connect()
+                s.execute(text("SELECT 1"))
+                s.close()
+            except ConnectionError as ce:
+                logger.debug(ce)
+                return False
+            else:
+                return True
+
+        try:
+            test_conn(engine)
+        except Exception as e:
+            logger.error(e)
+            try:
+                test_conn(next(engine))
+            except StopIteration as se:
+                logger.error(se)
         return engine
 
     _name = None
@@ -35,15 +54,11 @@ class RoutingSession(Session):
         return s
 
 
-sql_session_factory = scoped_session(
-    sessionmaker(
-        class_=RoutingSession,
-        autocommit=False,
-        autoflush=False,
-        expire_on_commit=False,
-        future=True,
-    ),
-    scopefunc=get_ident,
+sql_session_factory = sessionmaker(
+    class_=RoutingSession,
+    autocommit=False,
+    autoflush=False,
+    expire_on_commit=True,
 )
 
 
