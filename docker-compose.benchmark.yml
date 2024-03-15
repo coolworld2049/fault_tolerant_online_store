@@ -16,6 +16,6 @@ services:
     volumes:
       - ./benchmark:/mnt/locust
     deploy:
-      replicas: 6
+      replicas: 4
     env_file:
       - .env.prod

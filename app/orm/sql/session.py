@@ -1,10 +1,12 @@
+import socket
 from collections import deque
+from contextlib import closing
 from typing import Any
 
 from loguru import logger
 from sqlalchemy import NullPool
 from sqlalchemy.orm import sessionmaker
-from sqlmodel import create_engine, Session, SQLModel
+from sqlmodel import create_engine, SQLModel, Session
 
 from app.settings import settings
 
@@ -32,8 +34,16 @@ def on_database_shutdown():
         engine.dispose()
 
 
+def check_socket(host, port, timeout):
+    with closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as sock:
+        sock.settimeout(timeout)
+        if sock.connect_ex((host, port)) == 0:
+            return True
+        else:
+            return False
+
+
 class RoutingSession(Session):
-    counter = len(engines)
 
     def get_bind(
         self,
@@ -41,10 +51,19 @@ class RoutingSession(Session):
         clause=None,
         **kwargs: Any,
     ):
-        engine = engines[0]
-        engines.rotate(-1)
-        logger.debug(f"[{engine.url}]")
-        return engine
+        counter = len(engines)
+        while counter > 0:
+            engine = engines[0]
+            engines.rotate(-1)
+            counter -= 1
+            try:
+                if not check_socket(engine.url.host, engine.url.port, 1):
+                    raise ConnectionError()
+                logger.debug(f"Connection to {engine.url} successful.")
+                return engine
+            except ConnectionError as e:
+                logger.warning(f"Connection to {engine.url} failed: {e}")
+                continue
 
 
 sql_session_factory = sessionmaker(class_=RoutingSession, autoflush=False)
