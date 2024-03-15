@@ -4,10 +4,7 @@ from fastapi import FastAPI
 from loguru import logger
 from tenacity import retry, stop_after_attempt, wait_fixed
 
-from app.orm.cassandra.session import create_cassandra_session
-from app.orm.redis.session import create_redis_sentinel
 from app.orm.sql.session import sql_session_factory
-from app.settings import settings
 
 
 @retry(stop=stop_after_attempt(3), wait=wait_fixed(2))

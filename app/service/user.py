@@ -9,7 +9,8 @@ class UserService:
         self.repository = repository
 
     def create_user(self, user: models.UserCreate) -> models.User:
-        result = self.repository.add(user)
+        user_in = models.User(**user.model_dump(exclude_unset=True))
+        result = self.repository.add(user_in)
         return result
 
     def get_user(self, id: int) -> models.User:
@@ -26,5 +27,5 @@ class UserService:
         result = self.repository.update(user_in)
         return result
 
-    def delete_user(self, id: int) -> models.User:
+    def delete_user(self, id: int) -> None:
         self.repository.delete(id)

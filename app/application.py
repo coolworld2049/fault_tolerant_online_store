@@ -1,17 +1,13 @@
-import logging
-import sys
-
 from fastapi import FastAPI
-from loguru import logger
 
 from app.api.api import api_router
 from app.lifespan import lifespan
-from app.settings import settings
+from app.loguru_logging import configure_logging
+from app.orm.sql.session import on_database_shutdown, on_database_startup
 
 
 def create_fastapi_app() -> FastAPI:
-    logger.remove()
-    logger.add(sys.stdout, level=settings.LOG_LEVEL)
+    configure_logging()
     app = FastAPI(
         lifespan=lifespan,
         openapi_url="/api/openapi.json",
@@ -19,5 +15,8 @@ def create_fastapi_app() -> FastAPI:
     )
 
     app.include_router(api_router)
+
+    app.add_event_handler("startup", on_database_startup)
+    app.add_event_handler("shutdown", on_database_shutdown)
 
     return app

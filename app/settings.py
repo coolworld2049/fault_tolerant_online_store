@@ -6,12 +6,10 @@ class Settings(BaseSettings):
     HOST: str = "localhost"
     PORT: int = 8000
     LOG_LEVEL: str = "DEBUG"
-    WORKER_NUMBER: int = 1
-    RELOAD: bool = False
 
     PGPOOL_URLS: list[str] = [
-        "postgresql+psycopg://postgres:postgres@localhost:5432/postgres",
         "postgresql+psycopg://postgres:postgres@localhost:5433/postgres",
+        "postgresql+psycopg://postgres:postgres@localhost:5434/postgres",
     ]
     CASSANDRA_NODES: list[tuple[str, int]] = [
         ("localhost", 9042),
@@ -43,6 +41,13 @@ class Settings(BaseSettings):
             )
             for item in v
         ]
+
+    SQLALCHEMY_ECHO: bool = True
+    SQLALCHEMY_DB_POOL_SIZE: int = 100
+    SQLALCHEMY_WEB_CONCURRENCY: int = 2
+
+    def sqlalchemy_pool_size(self):
+        return max(self.SQLALCHEMY_DB_POOL_SIZE // self.SQLALCHEMY_WEB_CONCURRENCY, 5)
 
     model_config = SettingsConfigDict(
         env_file="../.env",

@@ -3,32 +3,35 @@ version: '3.9'
 services:
   pg-1:
     image: docker.io/bitnami/postgresql-repmgr:latest
+    hostname: pg-1
     volumes:
-      - pg_0_data:/bitnami/postgresql
+      - pg_1_data:/bitnami/postgresql
+      - ./conf/postgresql:/bitnami/postgresql/conf/conf.d
     environment:
       - POSTGRESQL_POSTGRES_PASSWORD=postgres
       - POSTGRESQL_USERNAME=postgres
       - POSTGRESQL_PASSWORD=postgres
       - POSTGRESQL_DATABASE=postgres
       - POSTGRESQL_NUM_SYNCHRONOUS_REPLICAS=1
+      - REPMGR_PARTNER_NODES=pg-1,pg-2
       - REPMGR_PRIMARY_HOST=pg-1
-      - REPMGR_PARTNER_NODES=pg-2,pg-1
       - REPMGR_NODE_NAME=pg-1
       - REPMGR_NODE_NETWORK_NAME=pg-1
       - REPMGR_USERNAME=repmgr
       - REPMGR_PASSWORD=repmgrpassword
   pg-2:
     image: docker.io/bitnami/postgresql-repmgr:latest
+    hostname: pg-2
     volumes:
-      - pg_1_data:/bitnami/postgresql
+      - pg_2_data:/bitnami/postgresql
+      - ./conf/postgresql:/bitnami/postgresql/conf/conf.d
     environment:
       - POSTGRESQL_POSTGRES_PASSWORD=postgres
       - POSTGRESQL_USERNAME=postgres
       - POSTGRESQL_PASSWORD=postgres
       - POSTGRESQL_DATABASE=postgres
-      - POSTGRESQL_NUM_SYNCHRONOUS_REPLICAS=1
-      - REPMGR_PRIMARY_HOST=pg-1
       - REPMGR_PARTNER_NODES=pg-1,pg-2
+      - REPMGR_PRIMARY_HOST=pg-1
       - REPMGR_NODE_NAME=pg-2
       - REPMGR_NODE_NETWORK_NAME=pg-2
       - REPMGR_USERNAME=repmgr
@@ -36,7 +39,7 @@ services:
   pgpool-1:
     image: docker.io/bitnami/pgpool:latest
     environment:
-      - PGPOOL_BACKEND_NODES=0:pg-1:5432,1:pg-2:5432
+      - PGPOOL_BACKEND_NODES=1:pg-1:5432,2:pg-2:5432
       - PGPOOL_SR_CHECK_USER=repmgr
       - PGPOOL_SR_CHECK_PASSWORD=repmgrpassword
       - PGPOOL_ENABLE_LDAP=no
@@ -45,11 +48,8 @@ services:
       - PGPOOL_ADMIN_USERNAME=admin
       - PGPOOL_ADMIN_PASSWORD=postgres
       - PGPOOL_ENABLE_LOAD_BALANCING=yes
-      - PGPOOL_ENABLE_STATEMENT_LOAD_BALANCING=yes
-      - PGPOOL_NUM_INIT_CHILDREN=10
-      - PGPOOL_MAX_POOL=1
     ports:
-      - "5432:5432"
+      - "5433:5432"
     healthcheck:
       test: [ "CMD", "/opt/bitnami/scripts/pgpool/healthcheck.sh" ]
       interval: 10s
@@ -58,7 +58,7 @@ services:
   pgpool-2:
     image: docker.io/bitnami/pgpool:latest
     environment:
-      - PGPOOL_BACKEND_NODES=0:pg-1:5432,1:pg-2:5432
+      - PGPOOL_BACKEND_NODES=1:pg-1:5432,2:pg-2:5432
       - PGPOOL_SR_CHECK_USER=repmgr
       - PGPOOL_SR_CHECK_PASSWORD=repmgrpassword
       - PGPOOL_ENABLE_LDAP=no
@@ -67,11 +67,8 @@ services:
       - PGPOOL_ADMIN_USERNAME=admin
       - PGPOOL_ADMIN_PASSWORD=postgres
       - PGPOOL_ENABLE_LOAD_BALANCING=yes
-      - PGPOOL_ENABLE_STATEMENT_LOAD_BALANCING=yes
-      - PGPOOL_NUM_INIT_CHILDREN=10
-      - PGPOOL_MAX_POOL=1
     ports:
-      - "5433:5432"
+      - "5434:5432"
     healthcheck:
       test: [ "CMD", "/opt/bitnami/scripts/pgpool/healthcheck.sh" ]
       interval: 10s
@@ -91,6 +88,6 @@ services:
     restart:
       unless-stopped
 volumes:
-  pg_0_data:
   pg_1_data:
+  pg_2_data:
   pgadmin:

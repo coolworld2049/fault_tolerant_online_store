@@ -11,7 +11,7 @@ router = APIRouter(prefix="/users", tags=["Users"])
 
 @router.post("/", response_model=models.User)
 def create_user(
-    user: models.User,
+    user: models.UserCreate,
     user_service: UserService = Depends(get_user_service),
 ):
     user = user_service.create_user(user)
@@ -58,9 +58,4 @@ def delete_user(
     user_service: UserService = Depends(get_user_service),
 ):
     user_service.delete_user(id)
-    user = user_service.get_user(id)
-    if user is None:
-        return JSONResponse(
-            status_code=status.HTTP_200_OK, content="schemas.User already deleted"
-        )
-    return user
+    return JSONResponse(status_code=status.HTTP_200_OK, content="success")

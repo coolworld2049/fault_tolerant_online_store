@@ -18,4 +18,4 @@ COPY . .
 
 FROM build as app
 
-CMD ["python3", "-m", "app"]
+CMD ["/bin/bash", "./start.sh"]

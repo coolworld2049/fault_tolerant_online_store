@@ -1,7 +1,7 @@
 from abc import ABC
 from typing import Type, Optional, Any, Sequence
 
-from sqlalchemy import Row, RowMapping, update
+from sqlalchemy import Row, RowMapping, update, delete
 from sqlmodel import Session
 from sqlmodel.sql.expression import SelectOfScalar, select, and_
 
@@ -40,25 +40,30 @@ class GenericSqlRepository(GenericRepository[T], ABC):
         return self._session.exec(stmt).all()
 
     def add(self, record: T) -> T:
-        self._session.add(record)
-        self._session.flush()
-        self._session.refresh(record)
-        return record
+        with self._session.begin():
+            self._session.add(record)
+            self._session.flush()
+            self._session.refresh(record)
+            return record
 
     def update(self, record: T) -> T:
         stmt = (
             update(self._model_cls)
-            .values(**record.model_dump(exclude={"id"}))
+            .values(**record.model_dump())
             .where(self._model_cls.id == record.id)
             .returning(self._model_cls)
         )
-        result = self._session.exec(stmt)
-        record = result.scalar_one()
-        self._session.flush()
-        return record
+        with self._session.begin():
+            result = self._session.exec(stmt)
+            record = result.scalar_one()
+            self._session.flush()
+            return record
 
     def delete(self, id: int) -> None:
-        record = self.get_by_id(id)
-        if record is not None:
-            self._session.delete(record)
-            self._session.flush()
+        stmt = (
+            delete(self._model_cls)
+            .where(self._model_cls.id == id)
+            .returning(self._model_cls)
+        )
+        with self._session.begin():
+            self._session.exec(stmt)

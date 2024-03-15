@@ -2,7 +2,6 @@ from fastapi import HTTPException
 from fastapi.params import Depends
 from loguru import logger
 from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy.orm import Session
 from starlette import status
 from starlette.requests import Request
 
@@ -11,7 +10,7 @@ from app.uow.uow import UnitOfWork
 
 
 def get_uow(requset: Request):
-    sql_session_factory: Session = requset.app.state.sql_session_factory
+    sql_session_factory = requset.app.state.sql_session_factory
     try:
         with UnitOfWork(sql_session_factory=sql_session_factory) as uow:
             yield uow

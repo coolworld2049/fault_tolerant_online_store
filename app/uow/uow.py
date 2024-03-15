@@ -32,7 +32,7 @@ class UnitOfWork(IUnitOfWork):
         self,
         sql_session_factory: Callable[[], Session | ScopedSession],
     ) -> None:
-        self._sql_session_factory = sql_session_factory
+        self._sql_session_factory: Session | ScopedSession = sql_session_factory
 
     def __enter__(self):
         self._session = self._sql_session_factory()
