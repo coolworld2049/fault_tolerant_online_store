@@ -57,13 +57,15 @@ class RoutingSession(Session):
             engines.rotate(-1)
             counter -= 1
             try:
-                if not check_socket(engine.url.host, engine.url.port, 1):
-                    raise ConnectionError()
+                if not check_socket(engine.url.host, engine.url.port, 3):
+                    raise ConnectionError(engine.url)
                 logger.debug(f"Connection to {engine.url} successful.")
                 return engine
             except ConnectionError as e:
                 logger.warning(f"Connection to {engine.url} failed: {e}")
                 continue
+        else:
+            logger.error("Could not connect to any url")
 
 
 sql_session_factory = sessionmaker(class_=RoutingSession, autoflush=False)

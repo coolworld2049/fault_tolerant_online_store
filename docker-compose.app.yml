@@ -1,22 +1,25 @@
 version: "3.9"
 
 services:
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+  app-1:
+    build: .
     env_file:
       - .env.prod
     ports:
       - "8000"
-    deploy:
-      replicas: 2
-      endpoint_mode: dnsrr
-  nginx-proxy:
+  app-2:
+    build: .
+    env_file:
+      - .env.prod
+    ports:
+      - "8000"
+  nginx:
     image: bitnami/nginx:latest
+    restart: always
     volumes:
       - ./conf/nginx/server_block.conf:/opt/bitnami/nginx/conf/server_blocks/server_block.conf:ro
     ports:
       - "80:80"
     depends_on:
-      - app
+      - app-1
+      - app-2
